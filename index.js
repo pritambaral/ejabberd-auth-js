@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 //Reference: http://www.ejabberd.im/files/doc/dev.html#htoc8
-struct = require('bufferpack');
+var struct = require('bufferpack');
+var EventEmitter = require('events').EventEmitter;
+exports = module.exports = new EventEmitter();
 
-PACKET = 2, LENGTH = 0;
+var PACKET = 2, LENGTH = 0;
 
-_read = function() {
-  data = process.stdin.read(LENGTH || PACKET);
+var _read = function() {
+  var data = process.stdin.read(LENGTH || PACKET);
   if(data === null)
     return;
   if(LENGTH === 0) { // We read AA
@@ -20,17 +22,23 @@ _read = function() {
   }
 }
 
-_operate = function(data) {
+var _operate = function(data) {
   if (process.env.EAJ_LOG) process.stderr.write(data);
-  _write(data);
+  data = data.split(':');
+  if (exports.listeners(data[0]).length == 0)
+    _write(0);
+  exports.emit.apply(exports, data);
 }
 
-_write = function(success) {
+var _write = function(success) {
   if(!success)
     success = 0;
   else
     success = 1;
   process.stdout.write(struct.pack("!HH", [PACKET, success]));
 }
+
+exports.success = _write.bind(null, 1);
+exports.failure = _write.bind(null, 0);
 
 process.stdin.on("readable", _read);

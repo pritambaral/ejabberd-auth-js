@@ -1,0 +1,17 @@
+{
+  "name": "ejabberd-auth-js",
+  "version": "0.0.1",
+  "description": "Ejabberd external auth script",
+  "main": "index.js",
+  "dependencies": {
+    "bufferpack": "~0.0.6"
+  },
+  "scripts": {
+    "test": "python3 ./jatest.py"
+  },
+  "keywords": [
+    "ejabberd"
+  ],
+  "author": "Pritam Baral <pritam@pritambaral.com>",
+  "license": "MIT"
+}

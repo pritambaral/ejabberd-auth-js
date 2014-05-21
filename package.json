@@ -7,7 +7,7 @@
     "bufferpack": "~0.0.6"
   },
   "scripts": {
-    "test": "python3 ./jatest.py"
+    "test": "python3 ./jatest.py ./examples/auth.js"
   },
   "keywords": [
     "ejabberd"

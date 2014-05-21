@@ -2,10 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from struct import pack, unpack
-import subprocess
-from subprocess import TimeoutExpired
+import subprocess, sys
 
-node = subprocess.Popen(['node', './examples/auth.js'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE);
+node = subprocess.Popen(['node', sys.argv[1]], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE);
 creds = b'auth:ula:haha:lol';
 creds = pack(">H", len(creds)) + bytes(creds);
 (out, err) = node.communicate(input = creds);
